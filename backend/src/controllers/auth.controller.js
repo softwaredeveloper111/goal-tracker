@@ -4,7 +4,7 @@ import asyncHandler from "../middlewares/asyncHandler.js";
 import config from "../config/config.js"
 import sendSuccess from "../utils/response.js"
 import generateToken from "../utils/generateToken.js"
-
+import redis from "../config/redis.js"
 
 
 
@@ -74,4 +74,35 @@ export const  loginUserController = asyncHandler(async(req,res)=>{
 
 
 
+export const getMecontroller = asyncHandler(async(req,res)=>{
 
+
+  const userId = req.user.id;
+  const user = await userModel.findById(userId); 
+  if(!user)  {
+     throw new AppError('user not found',404)
+  }
+
+
+  sendSuccess(res,200,"user data fetch successfully", user)
+
+})
+
+
+
+
+
+
+
+export const logoutController = asyncHandler(async(req,res)=>{
+
+  const token = req.cookies?.JWT_TOKEN;
+
+  if(token){
+   await redis.set(token,Date.now().toString(),"EX",86400)
+      res.clearCookie("JWT_TOKEN")
+  }
+  
+  sendSuccess(res,200,"logout successfully",null)
+
+})

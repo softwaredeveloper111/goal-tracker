@@ -34,6 +34,24 @@ if(!process.env.JWT_SECRET_KEY){
 }
 
 
+if(!process.env.REDIS_HOST){
+  throw new Error('REDIS_HOST is not defined in enviroment varaibles')
+}
+
+
+
+if(!process.env.REDIS_PORT){
+  throw new Error("REDIS PORT is not defined in enviroment variables");
+  
+}
+
+
+
+if(!process.env.REDIS_PASSWORD){
+    throw new Error("REDIS PASSWORD is not defined in enviroment variables");
+}
+
+
 
 
 
@@ -43,7 +61,10 @@ const config  = {
   MONGO_URI:process.env.MONGO_URI,
   BCRYPT_SALT_ROUND:process.env.BCRYPT_SALT_ROUND,
   FRONTEND_URL:process.env.FRONTEND_URL,
-  JWT_SECRET_KEY:process.env.JWT_SECRET_KEY
+  JWT_SECRET_KEY:process.env.JWT_SECRET_KEY,
+  REDIS_HOST:process.env.REDIS_HOST,
+  REDIS_PORT:process.env.REDIS_PORT,
+  REDIS_PASSWORD:process.env.REDIS_PASSWORD,
 }
 
 

@@ -1,4 +1,4 @@
- function sendSuccess( res, status , message,data){
+ function sendSuccess( res, status , message,data=""){
   
   const statusCode = status || 200
   const response = {

@@ -7,11 +7,13 @@ from "../validator/auth.validation.js"
 import 
   { 
     registerUserController , 
-    loginUserController
+    loginUserController,
+    getMecontroller,
+    logoutController
   } 
     from "../controllers/auth.controller.js";
 
-
+import userIdentifier from "../middlewares/auth.middleware.js";
 
 
 
@@ -46,6 +48,26 @@ authRouter.post("/login", loginvalidation ,  loginUserController)
 
 
 
+
+
+/**
+ * @route    GET  /api/auth/me
+ * @description    fetch user profile
+ * @access    Protected
+ * 
+ */
+authRouter.get("/me" , userIdentifier , getMecontroller)
+
+
+
+
+
+/**
+ * @route    POST   /api/auth/logout
+ * @description   logout user
+ * @access  Public
+ */
+authRouter.post("/logout", logoutController  )
 
 
 
