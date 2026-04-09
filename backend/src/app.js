@@ -5,6 +5,11 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser"
 import config from "./config/config.js";
 import errorHandler from "./middlewares/errorHandler.js";
+import goalRouter from "./routes/goal.route.js";
+
+
+
+
 
 
 const app = express();
@@ -29,7 +34,7 @@ app.use(express.static("public"))
 
 
 app.use("/api/auth",authRouter);
-
+app.use("/api/goal",goalRouter)
 
 
 

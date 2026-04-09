@@ -23,26 +23,33 @@ const goalSchema = new mongoose.Schema({
     trim:true,
     maxlength:[500,"Description cannot be more than 500 characters"]
   },
-
-  startDate:{
-    type:Date,
-    required:[true,"Start date is required"]
-  },
-
-
+  
+  /** store date+time at ISO format - UTC*/
   targetDate:{
     type:Date,
     required:[true,"Target date is required"]
   },
 
+
   status:{
     type:String,
-    enum:["Not Started","In Progress","Completed"],
-    default:"Not Started"
+    enum:["In Progress","Completed"],
+    default:"In Progress"
   }
 
 
 },{timestamps:true})
+
+
+
+
+goalSchema.pre("save", function(){
+   const goal = this;
+    if(goal.targetDate <= new Date()){
+      throw new Error("Target date cannot be in the past");
+    }
+})
+
 
 
 

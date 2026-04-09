@@ -17,7 +17,7 @@ redis.on("connect" , ()=>{
 
 
 redis.on("error",(err)=>{
-  console.log('connecton problem with redis ✅',err.message);
+  console.log('connecton problem with redis ❌',err.message);
   
 })
 

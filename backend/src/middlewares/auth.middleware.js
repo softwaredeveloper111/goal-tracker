@@ -4,13 +4,15 @@ import AppError from "../utils/appError.js";
 import redis from "../config/redis.js"
 
 
-function userIdentifier(req,res,next){
+async function userIdentifier(req,res,next){
   const token = req.cookies?.JWT_TOKEN;   
   
   if(token){
 
-    const isBlackListToken = redis.get(token);
-    if(!isBlackListToken ){
+    const isBlackListToken =await redis.get(token);
+    
+    if(isBlackListToken ){
+
       throw new AppError("token is alreday blacklisted",401)
     }
     

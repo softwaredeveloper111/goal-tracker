@@ -83,7 +83,6 @@ export const getMecontroller = asyncHandler(async(req,res)=>{
      throw new AppError('user not found',404)
   }
 
-
   sendSuccess(res,200,"user data fetch successfully", user)
 
 })
@@ -99,8 +98,8 @@ export const logoutController = asyncHandler(async(req,res)=>{
   const token = req.cookies?.JWT_TOKEN;
 
   if(token){
-   await redis.set(token,Date.now().toString(),"EX",86400)
-      res.clearCookie("JWT_TOKEN")
+   await redis.set(token,Date.now().toString(),"EX",86400*2)
+   res.clearCookie("JWT_TOKEN")
   }
   
   sendSuccess(res,200,"logout successfully",null)
