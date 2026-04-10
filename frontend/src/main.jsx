@@ -6,14 +6,19 @@ import 'remixicon/fonts/remixicon.css'
 import {BrowserRouter} from "react-router-dom"
 import {ToastContainer} from "react-toastify"
 import AuthContext from "./features/auth/auth.context.jsx"
+import GoalContext from "./features/Goal/goal.context.jsx"
+
+
 
 createRoot(document.getElementById('root')).render(
- 
 
+  <GoalContext>
    <AuthContext>
     <BrowserRouter>
       <App />
       <ToastContainer />
     </BrowserRouter>
    </AuthContext>
+  </GoalContext>
+  
 )

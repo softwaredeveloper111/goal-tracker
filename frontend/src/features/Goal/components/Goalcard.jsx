@@ -1,9 +1,13 @@
 
 import GoalProgressBar from "./GoalProgressBar"
+import {formatDate , formatDateTime , calcTotalDays} from "../utils/Dateutil"
 
 // goal prop shape:
 // { id, category, target, title, description, streak, grid[] }
 export default function GoalCard({ goal }) {
+
+ const totalDays = calcTotalDays(goal.createdAt, goal.targetDate);
+
   return (
     <div className="group relative bg-[#1a1a1a] p-8 transition-all duration-300 hover:bg-[#1f1f1f] cursor-pointer">
 
@@ -16,8 +20,8 @@ export default function GoalCard({ goal }) {
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-2">
 
-            <span className="text-[11px] uppercase tracking-[0.05em] text-[#555] font-['Space_Grotesk']">
-              {goal.target}
+            <span className="text-[11px] uppercase tracking-[0.05em] text-[#555] text-red-400 drop-shadow-[0_0_6px_rgba(248,113,113,0.8)]  font-['Space_Grotesk']">
+              Target Date: {formatDate(goal.targetDate)}
             </span>
           </div>
           <h3 className="text-2xl font-black text-white font-['Space_Grotesk'] mb-3">
@@ -36,8 +40,9 @@ export default function GoalCard({ goal }) {
               <path d="M12 2C9.5 6 7 8.5 7 12a5 5 0 0010 0c0-2-1-4-2-5-1 2-2 3-3 3s-1-2 0-8z"/>
             </svg>
             <span className="text-2xl font-black text-[#00ff87] font-['Space_Grotesk']">
-              {String(goal.streak).padStart(2, "0")}
-              <GoalProgressBar checkedDays={goal.checkedDays} totalDays={goal.totalDays} />
+              {String(goal.checkedDays).padStart(2, "0")}
+              
+              <GoalProgressBar checkedDays={goal.checkedDays}  totalDays={totalDays} />
             </span>
           </div>
         </div>

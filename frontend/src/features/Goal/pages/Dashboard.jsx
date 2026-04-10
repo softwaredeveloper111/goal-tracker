@@ -2,37 +2,32 @@ import Navbar from "../components/Navbar";
 import GoalCard from "../components/Goalcard";
 import FAB from "../components/Fab";
 import BottomNav from "../components/Bottomnav";
+import { useEffect } from "react";
+import useGoal from "../hooks/useGoal";
+import Fullpageloader from "../../shared/Fullpageloader"
+import  useAuth  from "../../auth/hooks/useAuth";
 
-const goals = [
-  {
-    id: 1,
-    target: "23 Apr, 2026. 1.00AM",
-    title: "Master Neural Architecture",
-    description:
-      "Architecting deep learning models from scratch using low-level tensor operations. Focus on performance optimization.",
-    streak: 28,
-   
-  },
-  {
-    id: 2,
-    target: "28 Apr, 2026. 12.00AM",
-    title: "05:00 AM Velocity Training",
-    description:
-      "Optimizing physical output through consistent early-morning conditioning and metabolic threshold training.",
-    streak: 14,
 
-  },
-  {
-    id: 3,
-    target: "1 May, 2026. 12.00PM",
-    title: "Portfolio Algorithm Tuning",
-    description:
-      "Rebalancing assets toward high-growth technological sectors and decentralized infrastructure protocols.",
-    streak: 5,
-  },
-];
+
+
 
 export default function DashboardPage() {
+
+ 
+  const { HandlerGetGoalsAPI, goals, loading  } = useGoal();
+  const {user} = useAuth();
+
+  useEffect(() => {
+    HandlerGetGoalsAPI();
+  }, []);
+ 
+  
+
+  if(loading) {
+    return (<Fullpageloader/>)
+  }
+
+
   return (
     <div className="min-h-screen bg-[#0e0e0e] text-white">
 
@@ -48,7 +43,7 @@ export default function DashboardPage() {
             Architect Mode Active
           </p>
           <h1 className="text-5xl font-black text-white font-['Space_Grotesk'] leading-tight tracking-tight mb-4">
-            Current Streak: 14
+            Welcom Back  {user?.username.split(" ")[0]}!
           </h1>
           <div className="h-px w-32 bg-gradient-to-r from-[#00ff87] to-transparent opacity-50" />
         </header>
@@ -56,7 +51,7 @@ export default function DashboardPage() {
         {/* Goal Cards */}
         <div className="space-y-6">
           {goals.map((goal) => (
-            <GoalCard key={goal.id} goal={goal} />
+            <GoalCard key={goal._id} goal={goal} />
           ))}
         </div>
       </main>

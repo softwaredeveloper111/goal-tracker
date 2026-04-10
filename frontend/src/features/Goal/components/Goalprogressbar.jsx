@@ -18,7 +18,7 @@ export default function GoalProgressBar({ checkedDays, totalDays }) {
       </div>
 
       {/* Bar */}
-      <div className="w-full h-[3px] bg-[#1f1f1f] rounded-full overflow-hidden">
+      <div className="w-full h-[5px] bg-[#1f1f1f] rounded-full overflow-hidden">
         <div
           className="h-full bg-[#00ff87] rounded-full transition-all duration-500"
           style={{ width: `${percentage}%` }}
