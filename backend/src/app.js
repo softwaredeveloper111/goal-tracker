@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser"
 import config from "./config/config.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import goalRouter from "./routes/goal.route.js";
-
+import checkinRouter from "./routes/checkin.routes.js";
 
 
 
@@ -34,7 +34,8 @@ app.use(express.static("public"))
 
 
 app.use("/api/auth",authRouter);
-app.use("/api/goal",goalRouter)
+app.use("/api/goal",goalRouter);
+app.use("/api/checkin",checkinRouter);
 
 
 

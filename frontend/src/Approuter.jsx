@@ -2,7 +2,7 @@ import {Routes,Route} from "react-router-dom"
 import Auth from "./features/auth/pages/Auth"
 import ProtectedRoute from "./features/shared/ProtectedRoute"
 import PublicRoute from "./features/shared/PublicRoute"
-
+import DashboardPage from "./features/Goal/pages/Dashboard"
 
 
 const Approuter = () => {
@@ -17,7 +17,7 @@ const Approuter = () => {
 
         <Route path="/" element={
           <ProtectedRoute>
-            <h1>Home</h1>
+            <DashboardPage/>
           </ProtectedRoute>
         } />
     </Routes>

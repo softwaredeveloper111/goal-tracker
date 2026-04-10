@@ -3,7 +3,7 @@ import AppError from "../utils/appError.js";
 import asyncHandler from "../middlewares/asyncHandler.js";
 import config from "../config/config.js"
 import sendSuccess from "../utils/response.js"
-
+import checkinModel from "../models/checkin.model.js";
 
 
 
@@ -20,7 +20,7 @@ export const createGoalController = asyncHandler(async(req,res)=>{
     userId
   })
 
-  sendSuccess(res,201,createGoal,"Goal created successfully")
+  sendSuccess(res,201,"Goal created successfully",createGoal)
 
 })
 
@@ -32,7 +32,13 @@ export const createGoalController = asyncHandler(async(req,res)=>{
 export const GetAllGoalsController = asyncHandler(async(req,res)=>{
   const userId = req.user.id
   const getGoals = await goalModel.find({userId});
-  sendSuccess(res,200,"All goals fetch successfully",getGoals)
+ const goalsWithCheckedDays = await Promise.all(
+  getGoals.map(async (goal) => {
+    const checkedDays = await checkinModel.countDocuments({ goalId: goal._id });
+    return { ...goal.toObject(), checkedDays };
+  })
+);           
+  sendSuccess(res,200,"All goals fetch successfully",goalsWithCheckedDays)
 })
 
 

@@ -17,7 +17,7 @@ const checkinSchema = new mongoose.Schema({
 
 
   date:{
-    type:Date,
+    type:String,  /** 2026-04-09 */
     required: [true, "Date is required"]
   }
 
