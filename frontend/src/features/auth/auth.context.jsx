@@ -6,10 +6,11 @@ const AuthContext = ({children}) => {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
+  const [isAuthChecked, setIsAuthChecked] = useState(false);
 
 
   return (
-    <AuthContextProvider.Provider value={{loading,setLoading,user,setUser,error,setError}}>
+    <AuthContextProvider.Provider value={{loading,setLoading,user,setUser,error,setError,isAuthChecked,setIsAuthChecked}}>
       {children}
     </AuthContextProvider.Provider>
   )

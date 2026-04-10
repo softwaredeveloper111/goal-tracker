@@ -8,7 +8,7 @@ import {registerAPI,loginAPI,getMeAPI,logoutAPI} from "../services/auth.api.js"
 const useAuth = () => {
 
   
-const {loading,setLoading,user, setUser, error, setError} = useContext(AuthContextProvider)
+const {loading,setLoading, user, setUser, error, setError, isAuthChecked, setIsAuthChecked} = useContext(AuthContextProvider)
   
 
 
@@ -18,6 +18,7 @@ const {loading,setLoading,user, setUser, error, setError} = useContext(AuthConte
     setError(null);
     const response = await registerAPI(userData);
     setUser(response.data);
+    setIsAuthChecked(true);
     return response
 
   } catch (error) {
@@ -36,6 +37,7 @@ const {loading,setLoading,user, setUser, error, setError} = useContext(AuthConte
     setError(null);
     const response = await loginAPI(userData);
     setUser(response.data);
+    setIsAuthChecked(true);
     return response
 
 
@@ -56,13 +58,15 @@ const {loading,setLoading,user, setUser, error, setError} = useContext(AuthConte
     setError(null);
     const response = await getMeAPI();
     setUser(response.data);
+    setIsAuthChecked(true);
     return response.data
   } catch (error) {
     setError(error.response?.data?.message || "Failed to retrieve user data");
     return error.response.data
   }
   finally{
-     setLoading(false);
+    setLoading(false);
+    setIsAuthChecked(true)
   }
 }
 
@@ -86,7 +90,7 @@ const {loading,setLoading,user, setUser, error, setError} = useContext(AuthConte
 
 
 
-  return {HandlerRegisterAPI, HandlerLoginAPI, HandlerGetMeAPI , HandlerLogoutAPI , loading,user,error}
+  return {HandlerRegisterAPI, HandlerLoginAPI, HandlerGetMeAPI , HandlerLogoutAPI , loading,user,error , isAuthChecked }
 }
 
 export default useAuth
