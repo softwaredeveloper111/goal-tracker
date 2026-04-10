@@ -4,7 +4,7 @@ import AppError from "../utils/appError.js";
 import asyncHandler from "../middlewares/asyncHandler.js";
 import config from "../config/config.js"
 import sendSuccess from "../utils/response.js"
-
+import goalModel from "../models/goal.model.js";
 
 
 
@@ -14,6 +14,15 @@ export const toggleCheckinController = asyncHandler(async (req, res) => {
 
   const userId = req.user.id;
   const { goalId, date} = req.body;
+
+  const goal = await goalModel.findById(goalId);
+  const goalCreatedDate = new Date(goal.createdAt).toISOString().split("T")[0];
+
+  if(date < goalCreatedDate){
+    throw new AppError("Check-in date cannot be before the goal creation date", 400);
+  }
+
+
   const isRecordAlreadyExists = await checkinModel.findOne({ userId, goalId, date });
 
   if(isRecordAlreadyExists){

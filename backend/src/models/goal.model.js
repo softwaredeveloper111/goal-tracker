@@ -21,7 +21,8 @@ const goalSchema = new mongoose.Schema({
   description:{
     type:String,
     trim:true,
-    maxlength:[500,"Description cannot be more than 500 characters"]
+    maxlength:[500,"Description cannot be more than 500 characters"],
+    required:[true,"Description is required"],
   },
   
   /** store date+time at ISO format - UTC*/

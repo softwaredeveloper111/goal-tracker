@@ -17,6 +17,8 @@ export const createGoalvalidation = [
 
   body("description")
   .trim()
+  .notEmpty()
+  .withMessage("Description is required")
   .isLength({ max: 500 })
   .withMessage("Description cannot be more than 500 characters"),
 
