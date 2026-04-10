@@ -1,15 +1,23 @@
 import { useState } from "react";
 import { useForm  } from "react-hook-form"
 import {toast} from "react-toastify"
-
+import useAuth from "../hooks/useAuth.js"
+import Fullpageloader from "../../shared/Fullpageloader.jsx"
+import {useNavigate} from "react-router-dom"
 
 
 
 export default function LoginForm() {
+
+
   const [showPassword, setShowPassword] = useState(false);
   const [focused, setFocused] = useState("");
+  const { HandlerLoginAPI , loading} = useAuth()
 
   
+  const navigate = useNavigate()
+
+
     
   const {
      register,
@@ -19,7 +27,7 @@ export default function LoginForm() {
 
 
   
-      const onError = (errors) => {
+   const onError = (errors) => {
     Object.values(errors).forEach((err) => {
       toast.error(err.message); 
     });
@@ -27,11 +35,31 @@ export default function LoginForm() {
 
 
 
+  
 
-  function SubmitEventHandler(data){
-    console.log(data)
+async  function SubmitEventHandler(data){
+    try {
+
+   const response =  await  HandlerLoginAPI(data);
+   if(response.success){
+    toast.success(response.message)
+    navigate("/")
+   }
+   else{
+    toast.error(response.message)
+
+   }
+
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message)
+    }
   }
 
+
+  if(loading){
+    return <Fullpageloader/>
+  }
 
 
   return (
