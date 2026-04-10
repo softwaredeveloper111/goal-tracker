@@ -1,11 +1,21 @@
 import { useState } from "react";
 import { useForm  } from "react-hook-form"
 import {toast} from "react-toastify"
+import Fullpageloader from "../../shared/Fullpageloader"
+import {useNavigate} from "react-router-dom"
+import useAuth from "../hooks/useAuth.js"
+
 
 
 export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [focused, setFocused] = useState("");
+  const {HandlerRegisterAPI,loading} = useAuth()
+
+
+  const navigate = useNavigate()
+
+
 
   
   const {
@@ -24,10 +34,26 @@ export default function RegisterForm() {
 
 
 
-  function SubmitEventHandler(data){
-    console.log(data)
+ async function SubmitEventHandler(data){
+    try {
+      const response = await HandlerRegisterAPI(data);
+      if(response.success){
+        toast.success(response.message)
+        navigate("/")
+      }
+      else{
+        toast.error(response.message)
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message || "An error occurred while registering." );
+    }
   }
   
+
+  if(loading){
+    return <Fullpageloader/>
+  }
 
 
   return (
