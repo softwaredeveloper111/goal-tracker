@@ -35,6 +35,10 @@ const goalSchema = new mongoose.Schema({
     type:String,
     enum:["In Progress","Completed"],
     default:"In Progress"
+  },
+
+  completedAt:{
+    type:Date,
   }
 
 
