@@ -80,6 +80,7 @@ goalRouter.delete("/:id",  goalIdValidation , userIdentifier , deleteGoalControl
  * @route    /api/goal/id
  * @description   update a user's goal,
  * @access      Protected
+ * @body      {title:String,description:String,targetDate:datestring}
  */
 
 goalRouter.patch("/:id", goalIdValidation , updateGoalValidation  , userIdentifier ,updateGoalController )

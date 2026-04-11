@@ -56,7 +56,10 @@ export const getSingleGoalController = asyncHandler(async(req,res)=>{
     throw new AppError("goal not found", 401)
   }
 
-  sendSuccess(res,200,"goal get successfully", goal)
+  const checkedDays = await checkinModel.countDocuments({ goalId: goal._id });
+  const goalWithCheckedDays = { ...goal.toObject(), checkedDays };
+
+  sendSuccess(res,200,"goal get successfully", goalWithCheckedDays)
 
 })
 

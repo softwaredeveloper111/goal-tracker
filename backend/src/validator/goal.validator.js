@@ -15,6 +15,7 @@ export const createGoalvalidation = [
   .isLength({ max: 100 })
   .withMessage("Title cannot be more than 100 characters"),
 
+
   body("description")
   .trim()
   .notEmpty()
@@ -22,12 +23,25 @@ export const createGoalvalidation = [
   .isLength({ max: 500 })
   .withMessage("Description cannot be more than 500 characters"),
 
+
+
   body("targetDate")
   .trim()
   .notEmpty()
   .withMessage("Target date is required")
-  .isISO8601()
-  .withMessage("Target date must be a valid date"),
+  .matches(/^\d{4}-\d{2}-\d{2}$/)
+  .withMessage("Target date must be in YYYY-MM-DD format")
+  .custom((value) => {
+      const date = new Date(value);
+     if (isNaN(date.getTime())) {
+    throw new Error("Target date is not a valid date");
+  }
+    const today = new Date().toISOString().split("T")[0];
+    if (value < today) {
+      throw new Error("Target date cannot be in the past");
+    }
+    return true;
+  }),
 
   validationErrorHandler
 
@@ -70,11 +84,23 @@ export const updateGoalValidation = [
   .isLength({ max: 500 })
   .withMessage("Description cannot be more than 500 characters"),
 
-  body("targetDate")
-  .optional()
+ body("targetDate")
   .trim()
-  .isISO8601()
-  .withMessage("Target date must be a valid date"),
+  .notEmpty()
+  .withMessage("Target date is required")
+  .matches(/^\d{4}-\d{2}-\d{2}$/)
+  .withMessage("Target date must be in YYYY-MM-DD format")
+  .custom((value) => {
+      const date = new Date(value);
+     if (isNaN(date.getTime())) {
+    throw new Error("Target date is not a valid date");
+  }
+    const today = new Date().toISOString().split("T")[0];
+    if (value < today) {
+      throw new Error("Target date cannot be in the past");
+    }
+    return true;
+  }),
 
   validationErrorHandler
 

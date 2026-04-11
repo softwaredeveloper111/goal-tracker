@@ -24,12 +24,12 @@ checkinRouter.post("/toggle",checkinToggleValidation , userIdentifier ,toggleChe
 
 
 /**
- * @routes   /api/checkin/:goalId
+ * @routes   /api/checkin/id
  * @methods  GET
  * @desc     Get all check-ins for a specific goal
  * @access   Private
  */
-checkinRouter.get("/:goalId", goalIdValidation , userIdentifier, CheckinsByGoalController)
+checkinRouter.get("/:id", goalIdValidation , userIdentifier, CheckinsByGoalController)
 
 
 

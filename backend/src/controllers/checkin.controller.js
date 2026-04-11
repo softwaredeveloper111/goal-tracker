@@ -42,8 +42,8 @@ export const toggleCheckinController = asyncHandler(async (req, res) => {
 export const CheckinsByGoalController = asyncHandler(async (req, res) => {
 
   const userId = req.user.id;
-  const { goalId } = req.params;
-  const checkins = await checkinModel.find({ userId, goalId });
+  const { id } = req.params;
+  const checkins = await checkinModel.find({ userId, goalId:id });
   return sendSuccess(res, 200, "Check-ins retrieved successfully", checkins);
 })
 

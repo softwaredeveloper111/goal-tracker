@@ -18,7 +18,8 @@ const checkinSchema = new mongoose.Schema({
 
   date:{
     type:String,  /** 2026-04-09  YY-MM-DD */
-    required: [true, "Date is required"]
+    required: [true, "Date is required"],
+    match: [/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"]
   }
 
 })
@@ -27,6 +28,13 @@ const checkinSchema = new mongoose.Schema({
 
 checkinSchema.pre("save", function(){
   const checkin = this;
+
+    const date = new Date(checkin.date);
+  if (isNaN(date.getTime())) {
+    return next(new Error("Date is not a valid date"));
+  }
+
+
   const today = new Date().toISOString().split("T")[0];
   if(checkin.date > today){
       throw new Error("checkin date cannot be in the future");

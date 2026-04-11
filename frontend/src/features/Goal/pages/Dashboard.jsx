@@ -2,19 +2,21 @@ import Navbar from "../components/Navbar";
 import GoalCard from "../components/Goalcard";
 import FAB from "../components/Fab";
 import BottomNav from "../components/Bottomnav";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import useGoal from "../hooks/useGoal";
 import Fullpageloader from "../../shared/Fullpageloader"
 import  useAuth  from "../../auth/hooks/useAuth";
-
+import CreateGoalModal  from "../components/CreateGoalModal";
 
 
 
 
 export default function DashboardPage() {
 
+   const [createGolaModal, setCreateGolaModal] = useState(false)
  
   const { HandlerGetGoalsAPI, goals, loading  } = useGoal();
+
   const {user} = useAuth();
 
   useEffect(() => {
@@ -25,6 +27,12 @@ export default function DashboardPage() {
 
   if(loading) {
     return (<Fullpageloader/>)
+  }
+
+
+
+  function openModalHandler() {
+    setCreateGolaModal(true);
   }
 
 
@@ -56,7 +64,8 @@ export default function DashboardPage() {
         </div>
       </main>
 
-      <FAB />
+      <FAB onClick={openModalHandler}/>
+      {createGolaModal && <CreateGoalModal onClose={() => setCreateGolaModal(false)} />}
       <BottomNav />
     </div>
   );
