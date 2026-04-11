@@ -1,6 +1,7 @@
 
 import GoalProgressBar from "./GoalProgressBar"
-import {formatDate , formatDateTime , calcTotalDays} from "../utils/Dateutil"
+import {formatDate , calcTotalDays} from "../utils/Dateutil"
+import { Link } from "react-router-dom";
 
 // goal prop shape:
 // { id, category, target, title, description, streak, grid[] }
@@ -9,7 +10,7 @@ export default function GoalCard({ goal }) {
  const totalDays = calcTotalDays(goal.createdAt, goal.targetDate);
 
   return (
-    <div className="group relative bg-[#1a1a1a] p-8 transition-all duration-300 hover:bg-[#1f1f1f] cursor-pointer">
+    <Link to={`/goals/${goal._id}`} className="block group relative bg-[#1a1a1a] p-8 transition-all duration-300 hover:bg-[#1f1f1f] cursor-pointer">
 
       {/* Left accent bar — animates on hover */}
       <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-[#00ff87] scale-y-0 group-hover:scale-y-100 transition-transform origin-top duration-300" />
@@ -40,13 +41,13 @@ export default function GoalCard({ goal }) {
               <path d="M12 2C9.5 6 7 8.5 7 12a5 5 0 0010 0c0-2-1-4-2-5-1 2-2 3-3 3s-1-2 0-8z"/>
             </svg>
             <span className="text-2xl font-black text-[#00ff87] font-['Space_Grotesk']">
-              {String(goal.checkedDays).padStart(2, "0")}
+              {String(goal.checkedDays ?? 0).padStart(2, "0")}
               
-              <GoalProgressBar checkedDays={goal.checkedDays}  totalDays={totalDays} />
+              <GoalProgressBar checkedDays={goal.checkedDays ?? 0 }  totalDays={totalDays} />
             </span>
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

@@ -1,14 +1,34 @@
 import {useForm} from "react-hook-form"
 import {toast} from "react-toastify"
+import Fullpageloader from "../../shared/Fullpageloader"
+import useGoal from "../hooks/useGoal"
 
 
 export default function CreateGoalModal({ onClose }) {
 
   const { register, handleSubmit , formState: { errors } } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    // onClose();
+  const {HandleCreateGoalAPI,loading} = useGoal() ;
+ const onSubmit =   async (data) => {
+
+   try {
+    const response = await HandleCreateGoalAPI(data);
+      if(response.success){
+
+        toast.success("Goal created successfully!");
+        onClose();
+
+      }
+
+      else{
+        toast.error("Failed to create goal.");
+      }
+    
+   } catch (error) { 
+
+      toast.error(error.message || "An error occurred while creating the goal.");
+   }
+
   };
 
 
@@ -18,6 +38,8 @@ export default function CreateGoalModal({ onClose }) {
     });
   };
 
+
+   if(loading) return <Fullpageloader />
 
 
   return (

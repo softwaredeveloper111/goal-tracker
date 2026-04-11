@@ -1,7 +1,9 @@
 // checkedDays = total days user ne check-in kiya (from CheckIn model)
 // totalDays = targetDate - createdAt (total goal duration in days)
-export default function GoalProgressBar({ checkedDays, totalDays }) {
+export default function GoalProgressBar({ checkedDays = 0, totalDays }) {
   const percentage = Math.min(Math.round((checkedDays / totalDays) * 100), 100);
+
+
 
   return (
     <div className="mt-3 w-36">

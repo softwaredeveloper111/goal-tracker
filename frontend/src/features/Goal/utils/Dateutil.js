@@ -39,8 +39,15 @@ export function formatDateTime(isoString) {
 
 
 export function calcTotalDays(createdAt, targetDate) {
+
+
+
   const start = new Date(createdAt);
+  const startUTC = Date.UTC(start.getFullYear(), start.getMonth(), start.getDate());
+
   const end = new Date(targetDate);
-  const diff = end - start;
-  return Math.ceil(diff / (1000 * 60 * 60 * 24));
+  const endUTC = Date.UTC(end.getFullYear(), end.getMonth(), end.getDate());
+
+  const diff = endUTC - startUTC;
+  return Math.ceil(diff / (1000 * 60 * 60 * 24))+1;
 }

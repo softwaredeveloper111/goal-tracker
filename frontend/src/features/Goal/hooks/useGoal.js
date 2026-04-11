@@ -1,4 +1,4 @@
-import { getGoalsAPI } from "../services/goal.api.js";
+import { getGoalsAPI , createGoalAPI } from "../services/goal.api.js";
 import { useContext } from "react";
 import { goalContextProvider } from "../goal.context.jsx";
 
@@ -29,9 +29,28 @@ const useGoal = () => {
 
 
 
+  const HandleCreateGoalAPI = async (goalData) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await createGoalAPI(goalData);
+      setGoals(prevGoals => [...prevGoals, response.data]);
+      return response
+    } catch (error) {
+       setError(error.response?.data?.message || "An error occurred while creating the goal.");
+       return error.response.data
+    }
+     finally{
+      setLoading(false)
+     }
+
+  }
 
 
-  return { HandlerGetGoalsAPI, goals, loading, error };
+
+
+
+  return { HandlerGetGoalsAPI, goals, loading, error , HandleCreateGoalAPI  };
 }
 
 export default useGoal

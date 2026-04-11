@@ -18,3 +18,16 @@ export const getGoalsAPI = async()=>{
 
 
 
+
+
+
+export const createGoalAPI = async(goalData)=>{
+    try {
+        const response = await axios.post('/api/goal', goalData);
+        console.log('Goal created successfully:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error creating goal:', error);
+        throw error;
+    }
+}
