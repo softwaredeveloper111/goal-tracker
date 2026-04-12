@@ -3,12 +3,18 @@ import { useState } from "react";
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
-export default function GoalCalendar({ targetDate, checkins = [], onToggle }) {
+export default function GoalCalendar({ targetDate, checkins = [], createdAt , onToggle }) {
+
+ 
+  const createdKey = createdAt
+    ? `${new Date(createdAt).getFullYear()}-${String(new Date(createdAt).getMonth()+1).padStart(2,"0")}-${String(new Date(createdAt).getDate()).padStart(2,"0")}`
+    : null;
+
   const today = new Date();
   const [currentYear, setCurrentYear] = useState(today.getFullYear());
   const [currentMonth, setCurrentMonth] = useState(today.getMonth());
 
-  const checkinSet = new Set(checkins);
+  const checkinSet = new Set(checkins.map(item=>item.date));
 
   // First day of month and total days
   const firstDay = new Date(currentYear, currentMonth, 1);
@@ -90,11 +96,17 @@ export default function GoalCalendar({ targetDate, checkins = [], onToggle }) {
             const isTarget = dayKey === targetDate;
             const isToday = dayKey === todayKey;
             const isFuture = dayKey > todayKey;
+            const isStartDay = dayKey === createdKey;
 
             return (
               <div
                 key={dayKey}
-                onClick={() => !isFuture && onToggle && onToggle(dayKey)}
+                onClick={() => {
+    if (isFuture) return;
+    if (createdKey && dayKey < createdKey) return;
+    console.log(dayKey);
+    onToggle && onToggle(dayKey);
+  }}
                 className={`bg-[#0e0e0e] h-20 p-2 relative flex flex-col items-center justify-between transition-all duration-200 ${
                   !isFuture ? "cursor-pointer hover:bg-[#151515]" : "cursor-not-allowed opacity-40"
                 }`}
@@ -105,10 +117,18 @@ export default function GoalCalendar({ targetDate, checkins = [], onToggle }) {
                 }`}>
                   {String(day).padStart(2, "0")}
                 </span>
+              
+                {/* mark start day */}
+               
+                {isStartDay && (
+  <span className="text-[8px] text-[#ffe600] uppercase tracking-widest font-['Space_Grotesk'] absolute top-1 left-1/2 -translate-x-1/2">
+    Start
+  </span>
+)}
 
                 {/* Target date — red circle */}
                 {isTarget && !isChecked && (
-                  <div className="w-10 h-10 rounded-full border-2 border-red-500 flex items-center justify-center shadow-[0_0_12px_rgba(239,68,68,0.4)]">
+                  <div className="sm:w-14 sm:h-14  w-10 h-10 rounded-full border-2 border-red-500 flex items-center justify-center shadow-[0_0_12px_rgba(239,68,68,0.4)]">
                     <span className="text-red-400 text-xs font-black font-['Space_Grotesk']">{day}</span>
                   </div>
                 )}
@@ -116,7 +136,7 @@ export default function GoalCalendar({ targetDate, checkins = [], onToggle }) {
                 {/* Checked day — red X cross */}
                 {isChecked && (
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2.5" strokeLinecap="round">
+                    <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2.5" strokeLinecap="round">
                       <line x1="18" y1="6" x2="6" y2="18"/>
                       <line x1="6" y1="6" x2="18" y2="18"/>
                     </svg>
@@ -126,8 +146,8 @@ export default function GoalCalendar({ targetDate, checkins = [], onToggle }) {
                 {/* Target + Checked — red circle with X */}
                 {isTarget && isChecked && (
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-10 h-10 rounded-full border-2 border-red-500 flex items-center justify-center shadow-[0_0_12px_rgba(239,68,68,0.4)]">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2.5" strokeLinecap="round">
+                    <div className="sm:w-14 sm:h-14  w-9 h-9 rounded-full border-2 border-red-500 flex items-center justify-center shadow-[0_0_12px_rgba(239,68,68,0.4)]">
+                      <svg className="h-3 w-3 sm:h-4 sm:w-4" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2.5" strokeLinecap="round">
                         <line x1="18" y1="6" x2="6" y2="18"/>
                         <line x1="6" y1="6" x2="18" y2="18"/>
                       </svg>

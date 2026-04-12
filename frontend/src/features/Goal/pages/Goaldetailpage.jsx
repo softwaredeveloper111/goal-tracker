@@ -2,21 +2,73 @@ import Navbar from "../components/Navbar";
 import GoalDetailHeader from "../components/Goaldetailheader";
 import GoalCalendar from "../components/Goalcalender";
 import GoalHeatmap from "../components/Goalheatmap";
+import { useParams } from "react-router-dom";
+import useGoal from "../hooks/useGoal";
+import Fullpageloader from "../../shared/Fullpageloader";
+import { useEffect } from "react";
+import {toast} from "react-toastify";
 
-// Dummy data — replace with real API data
-const goal = {
-  _id: "1",
-  title: "21 Days Consistency Challenge",
-  targetDate: "2026-05-01",
-  createdAt: "2026-04-11T04:42:13.593Z",
-  status: "inprogress",
-};
 
-// Dummy checkins — replace with real API data
-// Format: ["2026-04-11", "2026-04-12", ...]
-const checkins = ["2026-04-11", "2026-04-13", "2026-04-14"];
+
+
 
 export default function GoalDetailPage() {
+
+
+  const goalId = useParams().id;
+  const { HandleGetGoalByIdAPI , singleGoal ,loading , isSingleGoalLoading ,HandleGetAllCheckinsAPI , HandleToggleCheckinAPI , checkins , setCheckins } = useGoal();
+
+
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      await Promise.all([
+        HandleGetGoalByIdAPI(goalId),
+        HandleGetAllCheckinsAPI(goalId)
+      ]);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  fetchData();
+}, []);
+
+
+
+
+async function toggleCreateCheckin(date) {
+  const goalInfo = {
+    goalId: singleGoal._id,
+    date,
+  };
+
+
+  const alreadyExists = checkins.some(item => item.date === date);
+
+  if (alreadyExists) {
+  
+    setCheckins(prev => prev.filter(item => item.date !== date));
+  } else {
+
+    setCheckins(prev => [...prev, { date, _id: "temp", goalId: singleGoal._id }]);
+  }
+
+  try {
+    await HandleToggleCheckinAPI(goalInfo);
+  } catch (error) {
+    if (alreadyExists) {
+      setCheckins(prev => [...prev, { date, _id: "temp", goalId: singleGoal._id }]);
+    } else {
+      setCheckins(prev => prev.filter(item => item.date !== date));
+    }
+    toast.error(error.message);
+  }
+}
+
+
+
+
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white">
       <Navbar />
@@ -24,13 +76,13 @@ export default function GoalDetailPage() {
       <main className="pt-24 pb-20 px-6 max-w-6xl mx-auto">
 
         {/* Header */}
-        <GoalDetailHeader goal={goal} />
+        <GoalDetailHeader goal={singleGoal} />
 
         {/* Calendar */}
-        <GoalCalendar targetDate={goal.targetDate} checkins={checkins} />
+        <GoalCalendar targetDate={singleGoal?.targetDate} checkins={checkins}  createdAt={singleGoal?.createdAt}   onToggle={toggleCreateCheckin}/>
 
         {/* Heatmap */}
-        <GoalHeatmap createdAt={goal.createdAt} targetDate={goal.targetDate} checkins={checkins} />
+        <GoalHeatmap createdAt={singleGoal?.createdAt} targetDate={singleGoal?.targetDate} checkins={checkins} />
 
       </main>
 

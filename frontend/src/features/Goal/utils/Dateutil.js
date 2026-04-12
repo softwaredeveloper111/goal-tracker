@@ -51,3 +51,18 @@ export function calcTotalDays(createdAt, targetDate) {
   const diff = endUTC - startUTC;
   return Math.ceil(diff / (1000 * 60 * 60 * 24))+1;
 }
+
+
+
+
+
+export function calcDaysLeft(targetDate) {
+  const today = new Date();
+  const todayUTC = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
+
+  const end = new Date(targetDate);
+  const endUTC = Date.UTC(end.getFullYear(), end.getMonth(), end.getDate());
+
+  const diff = endUTC - todayUTC;
+  return Math.ceil(diff / (1000 * 60 * 60 * 24));
+}

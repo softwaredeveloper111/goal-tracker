@@ -1,24 +1,17 @@
+import {Link} from "react-router-dom";
+
+
+
 export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-[#0e0e0e]/70 backdrop-blur-xl border-b border-[#1a1a1a] font-['Space_Grotesk']">
 
       {/* Logo */}
-      <div className="text-xl font-black tracking-[0.15em] text-[#00ff87] uppercase flex items-center gap-2">
+      <Link to="/" className="text-xl font-black tracking-[0.15em] text-[#00ff87] uppercase flex items-center gap-2">
        <i className="ri-target-line text-3xl text-[#00ff87]"></i> GoalTracker
-      </div>
+      </Link>
 
-      {/* Center Nav — desktop only */}
-      <nav className="hidden md:flex items-center gap-8">
-        <a href="#" className="text-xs text-[#00ff87] border-b border-[#00ff87] pb-1 uppercase tracking-widest">
-          Dashboard
-        </a>
-        <a href="#" className="text-xs text-[#555] hover:text-[#00ff87] transition-colors uppercase tracking-widest">
-          History
-        </a>
-        <a href="#" className="text-xs text-[#555] hover:text-[#00ff87] transition-colors uppercase tracking-widest">
-          Vault
-        </a>
-      </nav>
+
 
       {/* Right Actions */}
       <div className="flex items-center gap-3">
@@ -43,6 +36,8 @@ export default function Navbar() {
           A
         </div>
       </div>
+
+
     </header>
   );
 }

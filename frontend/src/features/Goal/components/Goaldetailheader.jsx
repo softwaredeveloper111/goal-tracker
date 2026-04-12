@@ -1,16 +1,12 @@
 import { formatDate } from "../utils/Dateutil";
+import { calcDaysLeft } from "../utils/Dateutil";
 
-function calcDaysLeft(targetDate) {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const end = new Date(targetDate);
-  end.setHours(0, 0, 0, 0);
-  const diff = end - today;
-  return Math.ceil(diff / (1000 * 60 * 60 * 24));
-}
 
 export default function GoalDetailHeader({ goal }) {
-  const daysLeft = calcDaysLeft(goal.targetDate);
+
+  
+
+  const daysLeft = calcDaysLeft(goal?.targetDate);
   const isOverdue = daysLeft < 0;
   const isToday = daysLeft === 0;
 
@@ -49,7 +45,7 @@ export default function GoalDetailHeader({ goal }) {
 
           {/* Goal Title */}
           <h1 className="text-5xl md:text-6xl font-black text-white font-['Space_Grotesk'] tracking-tighter leading-none uppercase">
-            {goal.title}
+            {goal?.title}
           </h1>
         </div>
 
@@ -59,7 +55,7 @@ export default function GoalDetailHeader({ goal }) {
             Target Completion
           </p>
           <p className="text-2xl font-black text-white font-['Space_Grotesk'] tracking-tight">
-            {formatDate(goal.targetDate)}
+            {formatDate(goal?.targetDate)}
           </p>
         </div>
       </div>
