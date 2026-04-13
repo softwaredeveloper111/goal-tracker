@@ -84,3 +84,21 @@ export const toggleCheckinAPI = async(checkinData)=>{
         throw error;
     }
 }
+
+
+
+
+
+
+export const deleteGoalAPI = async (goalId) => {
+    
+try {
+
+    const response = await axios.delete(`/api/goal/${goalId}`);
+    console.log("goal delete sucessfull", response.data);
+    return response.data
+    
+} catch (error) {
+    console.log("facing error to delete a goal",error);
+    throw error
+}}

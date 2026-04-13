@@ -2,6 +2,7 @@ import {useForm} from "react-hook-form"
 import {toast} from "react-toastify"
 import Fullpageloader from "../../shared/Fullpageloader"
 import useGoal from "../hooks/useGoal"
+import GoalCardSkeleton from "../../shared/Goalcardskeleton"
 
 
 export default function CreateGoalModal({ onClose }) {
@@ -39,7 +40,7 @@ export default function CreateGoalModal({ onClose }) {
   };
 
 
-   if(loading) return <Fullpageloader />
+   if(loading) return <GoalCardSkeleton />
 
 
   return (
