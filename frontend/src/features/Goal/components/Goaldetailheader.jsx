@@ -68,8 +68,20 @@ export default function GoalDetailHeader({ goal }) {
 <MarkAsCompleteButton
   status={goalStatus}
   onConfirm={async () => {
-    await HandleMarkAsCompleteAPI(goal._id);
-    toast.success("Goal completed! 🎉");
+    try {
+      const response =  await HandleMarkAsCompleteAPI(goal._id);
+
+      if(response.success){
+
+        toast.success("Goal completed! 🎉");
+      }
+      else{
+        toast.error("goal is already completed")
+      }
+      
+    } catch (error) {
+       toast.error(error.message)
+    }
   }}
 />
 

@@ -58,7 +58,7 @@ export default function MarkAsCompleteButton({ status, onConfirm }) {
             <div className="flex gap-3">
               <button
                 onClick={() => setShowPopup(false)}
-                className="flex-1 py-3 border border-[#1a1a1a] text-[#555] hover:text-white hover:border-[#2a2a2a] transition-all duration-200 text-xs uppercase tracking-widest font-['Space_Grotesk']"
+                className="cursor-pointer flex-1 py-3 border border-[#1a1a1a] text-[#555] hover:text-white hover:border-[#2a2a2a] transition-all duration-200 text-xs uppercase tracking-widest font-['Space_Grotesk']"
               >
                 Cancel
               </button>
@@ -67,7 +67,7 @@ export default function MarkAsCompleteButton({ status, onConfirm }) {
                   setShowPopup(false);
                   onConfirm();
                 }}
-                className="flex-1 py-3 bg-[#00ff87] text-[#0a0a0a] font-black text-xs uppercase tracking-widest font-['Space_Grotesk'] hover:bg-[#00e87a] active:scale-95 transition-all duration-200 shadow-[0_0_20px_rgba(0,255,135,0.2)]"
+                className="cursor-pointer flex-1 py-3 bg-[#00ff87] text-[#0a0a0a] font-black text-xs uppercase tracking-widest font-['Space_Grotesk'] hover:bg-[#00e87a] active:scale-95 transition-all duration-200 shadow-[0_0_20px_rgba(0,255,135,0.2)]"
               >
                 Yes, Complete
               </button>
