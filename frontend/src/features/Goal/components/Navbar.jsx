@@ -1,13 +1,16 @@
 import {Link} from "react-router-dom";
 import { useState,useEffect, useRef } from "react";
+import useAuth from "../../auth/hooks/useAuth";
+
 
 
 export default function Navbar() {
 
   
-    const [showDropdown, setShowDropdown] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
- 
+  const {user} = useAuth();
+  
 
 
    useEffect(() => {
@@ -37,10 +40,17 @@ export default function Navbar() {
       <div className="relative" ref={dropdownRef}>
         <button
           onClick={() => setShowDropdown(prev => !prev)}
-          className="w-9 h-9 rounded-full bg-[#1a1a1a] border border-[#2a2a2a] flex items-center justify-center text-sm text-[#00ff87] font-black hover:border-[#00ff87]/40 transition-all duration-200"
+          className="cursor-pointer w-9 h-9 rounded-full bg-[#1a1a1a] border border-[#2a2a2a] flex items-center justify-center text-sm text-[#00ff87] font-black hover:border-[#00ff87]/40 transition-all duration-200"
         >
-          A
+
+          {user?.avatar ? (
+            <img src={user.avatar} alt="Avatar" className="w-full h-full rounded-full object-cover" />
+          ) : (
+            <span className="text-lg">{user?.username.charAt(0)}</span>
+          )}
+
         </button>
+
  
         {/* Dropdown */}
         {showDropdown && (
@@ -48,7 +58,7 @@ export default function Navbar() {
  
             <button
               onClick={() => setShowDropdown(false)}
-              className="w-full flex items-center gap-3 px-4 py-3 text-[#555] hover:text-white hover:bg-[#1a1a1a] transition-all duration-200 text-[11px] uppercase tracking-widest font-['Space_Grotesk']"
+              className="cursor-pointer w-full flex items-center gap-3 px-4 py-3 text-[#555] hover:text-white hover:bg-[#1a1a1a] transition-all duration-200 text-[11px] uppercase tracking-widest font-['Space_Grotesk']"
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                 <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
@@ -61,7 +71,7 @@ export default function Navbar() {
  
             <button
               onClick={() => setShowDropdown(false)}
-              className="w-full flex items-center gap-3 px-4 py-3 text-red-500/60 hover:text-red-400 hover:bg-red-500/5 transition-all duration-200 text-[11px] uppercase tracking-widest font-['Space_Grotesk']"
+              className="cursor-pointer w-full flex items-center gap-3 px-4 py-3 text-red-500/60 hover:text-red-400 hover:bg-red-500/5 transition-all duration-200 text-[11px] uppercase tracking-widest font-['Space_Grotesk']"
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                 <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>

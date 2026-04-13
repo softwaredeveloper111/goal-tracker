@@ -5,6 +5,8 @@ import config from "../config/config.js"
 import sendSuccess from "../utils/response.js"
 import generateToken from "../utils/generateToken.js"
 import redis from "../config/redis.js"
+import uploadToImageKit from "../services/imageKit.service.js";
+
 
 
 
@@ -74,6 +76,8 @@ export const  loginUserController = asyncHandler(async(req,res)=>{
 
 
 
+
+
 export const getMecontroller = asyncHandler(async(req,res)=>{
 
 
@@ -105,3 +109,33 @@ export const logoutController = asyncHandler(async(req,res)=>{
   sendSuccess(res,200,"logout successfully",null)
 
 })
+
+
+
+
+
+
+
+export const updateProfileController = asyncHandler(async(req,res)=>{
+  const userId = req.user.id;
+  const avatarFile = req.file;
+  if(!avatarFile){
+    throw new AppError("avatar file is required",400)
+  }
+
+  const avatarUrl = await uploadToImageKit(avatarFile);
+  // console.log(avatarUrl) 
+ 
+  const user = await userModel.findOneAndUpdate({_id:userId}, {avatar:avatarUrl},{returnDocument:"after"})
+
+  sendSuccess(res,200,"profile updated successfully",user)
+
+
+})
+
+
+
+
+
+
+
