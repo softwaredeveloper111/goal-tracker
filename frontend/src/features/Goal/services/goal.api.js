@@ -102,3 +102,19 @@ try {
     console.log("facing error to delete a goal",error);
     throw error
 }}
+
+
+
+
+
+
+export const markAsCompleteAPI = async(goalId)=>{
+    try {
+        const response = await axios.patch(`/api/goal/${goalId}/complete`);
+        console.log("goal mark as  completed sucessfully" , response.data );
+        return response.data
+    } catch (error) {
+        console.log("facing error to mark as completed",error)
+        throw error
+    }
+}

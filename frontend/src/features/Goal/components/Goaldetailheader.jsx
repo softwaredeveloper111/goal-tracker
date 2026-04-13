@@ -1,8 +1,8 @@
 import { formatDate } from "../utils/Dateutil";
 import { calcDaysLeft } from "../utils/Dateutil";
 import MarkAsCompleteButton from "./MarkAsCompleteButton";
-
-
+import useGoal from "../hooks/useGoal";
+import { toast } from "react-toastify";
 
 
 export default function GoalDetailHeader({ goal }) {
@@ -12,6 +12,8 @@ export default function GoalDetailHeader({ goal }) {
   const daysLeft = calcDaysLeft(goal?.targetDate);
   const isOverdue = daysLeft < 0;
   const isToday = daysLeft === 0;
+
+  const {goalStatus , HandleMarkAsCompleteAPI} = useGoal();
 
   return (
     <header className="mb-12">
@@ -64,10 +66,12 @@ export default function GoalDetailHeader({ goal }) {
          
 
 <MarkAsCompleteButton
-  status={goal?.status}
-  onConfirm={""} // apni API call yahan}
+  status={goalStatus}
+  onConfirm={async () => {
+    await HandleMarkAsCompleteAPI(goal._id);
+    toast.success("Goal completed! 🎉");
+  }}
 />
-
 
       </div>
 

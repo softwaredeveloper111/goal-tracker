@@ -1,4 +1,6 @@
 import { useState } from "react";
+import useGoal from "../hooks/useGoal";
+import { toast } from "react-toastify";
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const MONTHS = [
@@ -61,6 +63,9 @@ export default function GoalCalendar({
   };
 
   const todayKey = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+
+  const { goalStatus , completedDate} =
+    useGoal();
 
   return (
     <section className="mb-10">
@@ -132,14 +137,19 @@ export default function GoalCalendar({
             const isToday = dayKey === todayKey;
             const isFuture = dayKey > todayKey;
             const isStartDay = dayKey === createdKey;
+            const isCompletedDay =
+              goalStatus === "Completed" && dayKey === completedDate;
 
             return (
               <div
                 key={dayKey}
                 onClick={() => {
+                  if (goalStatus === "Completed") {
+                    toast.info("Goal is locked — already completed 🔒");
+                    return;
+                  }
                   if (isFuture) return;
                   if (createdKey && dayKey < createdKey) return;
-                  console.log(dayKey);
                   onToggle && onToggle(dayKey);
                 }}
                 className={`bg-[#0e0e0e] h-20 p-2 relative flex flex-col items-center justify-between transition-all duration-200 ${
@@ -162,6 +172,12 @@ export default function GoalCalendar({
                 {isStartDay && (
                   <span className="text-[8px] text-[#ffe600] uppercase tracking-widest font-['Space_Grotesk'] absolute sm:top-1 bottom-1 left-1/2 -translate-x-1/2">
                     Start
+                  </span>
+                )}
+
+                {isCompletedDay && (
+                  <span className="sm:text-[8px] text-[5px]  text-[#ff7300] uppercase tracking-widest font-['Space_Grotesk'] absolute sm:bottom-1   left-1/2 -translate-x-1/2">
+                    Completed
                   </span>
                 )}
 

@@ -11,10 +11,12 @@ const GoalContext = ({children}) => {
  const [error, setError] = useState(null);
  const [isSingleGoalLoading, setIsSingleGoalLoading] = useState(true);
  const [checkins, setCheckins] = useState([]);
+const [goalStatus, setGoalStatus] = useState(singleGoal?.status);
+const [completedDate, setCompletedDate] = useState(singleGoal?.completedAt);
 
 
   return (
-    <goalContextProvider.Provider value={{ goals, setGoals, loading, setLoading, error, setError , singleGoal , setSingleGoal, isSingleGoalLoading, setIsSingleGoalLoading ,checkins , setCheckins }}>
+    <goalContextProvider.Provider value={{ goals, setGoals, loading, setLoading, error, setError , singleGoal , setSingleGoal, isSingleGoalLoading, setIsSingleGoalLoading ,checkins , setCheckins ,goalStatus , setGoalStatus ,completedDate , setCompletedDate }}>
       {children}
     </goalContextProvider.Provider>
   )
