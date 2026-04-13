@@ -9,7 +9,7 @@ import useGoal from "../hooks/useGoal";
 export default function GoalCard({ goal }) {
   const totalDays = calcTotalDays(goal.createdAt, goal.targetDate);
 
-  const { HandleDeleteGoalAPI } = useGoal();
+  const { HandleDeleteGoalAPI  } = useGoal();
 
   return (
     <div className=" block group relative bg-[#1a1a1a] p-8 transition-all duration-300 hover:bg-[#1f1f1f]">
@@ -36,7 +36,9 @@ export default function GoalCard({ goal }) {
         </div>
 
         {/* Right — Streak Counter */}
-        <div className="flex flex-col items-end">
+
+        {goal.status==="Completed" ? <button className="px-4 py-2 text-[12px] font-bold uppercase tracking-wider bg-blue-500 text-white rounded">completed</button> : (
+             <div className="flex flex-col items-end">
           <div className="flex items-center gap-2 bg-[#0e0e0e] px-4 py-2 border border-[#00ff87]/10">
             {/* Fire icon */}
             <svg width="18" height="18" viewBox="0 0 24 24" fill="#00ff87">
@@ -52,6 +54,10 @@ export default function GoalCard({ goal }) {
             </span>
           </div>
         </div>
+        ) }
+       
+
+
       </div>
 
       <div className="absolute  top-1 right-1">

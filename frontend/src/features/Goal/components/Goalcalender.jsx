@@ -182,8 +182,8 @@ export default function GoalCalendar({
 
                 {/* Target date — red circle */}
                 {isTarget && !isChecked && (
-                  <div className="absolute sm:top-3  inset-0 flex items-center justify-center">
-                    <div className="sm:w-12 sm:h-12 w-9 h-9 rounded-full border-2 border-red-500 flex items-center justify-center shadow-[0_0_12px_rgba(239,68,68,0.4)]">
+                  <div className="absolute sm:top-1  inset-0 flex items-center justify-center">
+                    <div className="sm:w-10 sm:h-10 w-9 h-9 rounded-full border-2 border-red-500 flex items-center justify-center shadow-[0_0_12px_rgba(239,68,68,0.4)]">
                       <span className="text-red-400 text-xs font-black font-['Space_Grotesk']">
                         {day}
                       </span>
