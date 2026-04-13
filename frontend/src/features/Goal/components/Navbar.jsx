@@ -4,13 +4,13 @@ import useAuth from "../../auth/hooks/useAuth";
 import Loader from "../../shared/Loader";
 import {toast} from "react-toastify"
 import {useNavigate} from "react-router-dom"
-import  Transitionblackbg from "../../shared/TransitionBlackBg"
+import  Fullpageloader from "../../shared/Fullpageloader"
 
 
 export default function Navbar() {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
-  const { user, HandlerUpdateProfileAvatarAPI, loading, HandlerLogoutAPI } =
+  const { user, HandlerUpdateProfileAvatarAPI, loading, HandlerLogoutAPI ,logoutLoading } =
     useAuth();
 
   const navigate = useNavigate()
@@ -45,8 +45,8 @@ export default function Navbar() {
    }
 
 
-   if(loading){
-     return <Transitionblackbg/>
+   if(logoutLoading){
+     return <Fullpageloader/>
    }
 
 
@@ -92,7 +92,8 @@ export default function Navbar() {
                   if (!file) return;
                   const formData = new FormData();
                   formData.append("avatar", file);
-                  await HandlerUpdateProfileAvatarAPI(formData);
+                 const response =  await HandlerUpdateProfileAvatarAPI(formData);
+                 response? toast.success("profile updated successful") :toast.error("toast updated failed")
                   setShowDropdown(false);
                 }}
               />

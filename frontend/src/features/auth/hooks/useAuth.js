@@ -8,7 +8,7 @@ import {registerAPI,loginAPI,getMeAPI,logoutAPI , updateProfileAvatarAPI} from "
 const useAuth = () => {
 
   
-const {loading,setLoading, user, setUser, error, setError, isAuthChecked, setIsAuthChecked} = useContext(AuthContextProvider)
+const {loading,setLoading, user, setUser, error, setError, isAuthChecked, setIsAuthChecked , logoutLoading,setLogoutLoading} = useContext(AuthContextProvider)
   
 
 
@@ -74,7 +74,7 @@ const {loading,setLoading, user, setUser, error, setError, isAuthChecked, setIsA
 
   const HandlerLogoutAPI = async()=>{
   try {
-    setLoading(true);
+    setLogoutLoading(true);
     setError(null);
     const response = await logoutAPI();
     setUser(null);
@@ -84,7 +84,7 @@ const {loading,setLoading, user, setUser, error, setError, isAuthChecked, setIsA
     return error.response.data
   }
   finally{
-      setLoading(false);
+      setLogoutLoading(false);
   }
   }
 
@@ -108,7 +108,7 @@ const {loading,setLoading, user, setUser, error, setError, isAuthChecked, setIsA
 
 
 
-  return {HandlerRegisterAPI, HandlerLoginAPI, HandlerGetMeAPI , HandlerLogoutAPI , HandlerUpdateProfileAvatarAPI ,  loading,user,error , isAuthChecked }
+  return {HandlerRegisterAPI, HandlerLoginAPI, HandlerGetMeAPI , HandlerLogoutAPI , HandlerUpdateProfileAvatarAPI ,  loading,user,error , isAuthChecked ,logoutLoading }
 }
 
 export default useAuth

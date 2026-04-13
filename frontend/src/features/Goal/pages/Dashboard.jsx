@@ -62,7 +62,7 @@ export default function DashboardPage() {
         <div className="space-y-6">
           {loading
   ? Array.from({ length: 3 }).map((_, i) => <GoalCardSkeleton key={i} />)
-  : goals.map(goal => <GoalCard key={goal._id} goal={goal} />)
+  : goals.length>0 ? (goals.map(goal => <GoalCard key={goal._id} goal={goal}/>))  : (<span className="text-zinc-500">No goals has been create Yet.</span> )
 }
 
         </div>

@@ -1,6 +1,6 @@
 export default function FullPageLoader() {
   return (
-    <div className="fixed inset-0 z-50 bg-zinc-700 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center">
       <Loader />
     </div>
   );
