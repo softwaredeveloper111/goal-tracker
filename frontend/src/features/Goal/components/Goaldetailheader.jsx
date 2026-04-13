@@ -4,48 +4,54 @@ import MarkAsCompleteButton from "./MarkAsCompleteButton";
 import useGoal from "../hooks/useGoal";
 import { toast } from "react-toastify";
 
-
 export default function GoalDetailHeader({ goal }) {
-
-  
-
   const daysLeft = calcDaysLeft(goal?.targetDate);
   const isOverdue = daysLeft < 0;
   const isToday = daysLeft === 0;
 
-  const {goalStatus , HandleMarkAsCompleteAPI} = useGoal();
+  const { goalStatus, HandleMarkAsCompleteAPI } = useGoal();
 
   return (
     <header className="mb-12">
       <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
-
         {/* Left — Status badge + Title */}
         <div>
           <div className="flex items-center gap-3 mb-4">
-
-            {/* Active/Overdue badge */}
-            <span className={`px-3 py-1 text-[10px] uppercase tracking-widest font-['Space_Grotesk'] border ${
-              isOverdue
-                ? "bg-red-500/10 text-red-400 border-red-500/20"
-                : "bg-[#00ff87]/10 text-[#00ff87] border-[#00ff87]/20"
-            }`}>
-              {isOverdue ? "Overdue" : "Active Operation"}
+            {/* Active/Overdue  or completed badge */}
+            <span
+              className={`px-3 py-1 text-[10px] uppercase tracking-widest font-['Space_Grotesk'] border ${
+                goalStatus === "Completed"
+                  ? "bg-blue-500/10 text-blue-400 border-blue-500/20"
+                  : isOverdue
+                    ? "bg-red-500/10 text-red-400 border-red-500/20"
+                    : "bg-[#00ff87]/10 text-[#00ff87] border-[#00ff87]/20"
+              }`}
+            >
+              {goalStatus === "Completed"
+                ? "Completed"
+                : isOverdue
+                  ? "Overdue"
+                  : "Active Operation"}
             </span>
 
             {/* Days left badge */}
-            <span className={`px-4 py-1 text-[10px] font-black uppercase tracking-tight font-['Space_Grotesk'] shadow-lg ${
-              isOverdue
-                ? "bg-red-500 text-white shadow-red-500/20"
-                : isToday
-                ? "bg-yellow-400 text-black shadow-yellow-400/20"
-                : "bg-[#00ff87] text-[#0a0a0a] shadow-[#00ff87]/20"
-            }`}>
-              {isOverdue
-                ? `${Math.abs(daysLeft)} days overdue`
-                : isToday
-                ? "Due today"
-                : `${daysLeft} days left`}
-            </span>
+            {goalStatus !== "Completed" && (
+              <span
+                className={`px-4 py-1 text-[10px] font-black uppercase tracking-tight font-['Space_Grotesk'] shadow-lg ${
+                  isOverdue
+                    ? "bg-red-500 text-white shadow-red-500/20"
+                    : isToday
+                      ? "bg-yellow-400 text-black shadow-yellow-400/20"
+                      : "bg-[#00ff87] text-[#0a0a0a] shadow-[#00ff87]/20"
+                }`}
+              >
+                {isOverdue
+                  ? `${Math.abs(daysLeft)} days overdue`
+                  : isToday
+                    ? "Due today"
+                    : `${daysLeft} days left`}
+              </span>
+            )}
           </div>
 
           {/* Goal Title */}
@@ -63,28 +69,29 @@ export default function GoalDetailHeader({ goal }) {
             {formatDate(goal?.targetDate)}
           </p>
         </div>
-         
 
-<MarkAsCompleteButton
-  status={goalStatus}
-  onConfirm={async () => {
-    try {
-      const response =  await HandleMarkAsCompleteAPI(goal._id);
+        {goalStatus === "Completed" ? (
+          <span className="px-4 py-2 text-[12px] font-bold uppercase tracking-wider bg-blue-500 text-white rounded">
+            Completed
+          </span>
+        ) : (
+          <MarkAsCompleteButton
+            status={goalStatus}
+            onConfirm={async () => {
+              try {
+                const response = await HandleMarkAsCompleteAPI(goal._id);
 
-      if(response.success){
-
-        toast.success("Goal completed! 🎉");
-      }
-      else{
-        toast.error("goal is already completed")
-      }
-      
-    } catch (error) {
-       toast.error(error.message)
-    }
-  }}
-/>
-
+                if (response.success) {
+                  toast.success("Goal completed! 🎉");
+                } else {
+                  toast.error("goal is already completed");
+                }
+              } catch (error) {
+                toast.error(error.message);
+              }
+            }}
+          />
+        )}
       </div>
 
       {/* Divider */}

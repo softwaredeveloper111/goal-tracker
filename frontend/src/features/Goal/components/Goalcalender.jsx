@@ -64,8 +64,7 @@ export default function GoalCalendar({
 
   const todayKey = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
 
-  const { goalStatus , completedDate} =
-    useGoal();
+  const { goalStatus, completedDate } = useGoal();
 
   return (
     <section className="mb-10">
@@ -170,13 +169,13 @@ export default function GoalCalendar({
                 {/* mark start day */}
 
                 {isStartDay && (
-                  <span className="text-[8px] text-[#ffe600] uppercase tracking-widest font-['Space_Grotesk'] absolute sm:top-1 bottom-1 left-1/2 -translate-x-1/2">
+                  <span className="text-[8px] text-[#ffe600] uppercase tracking-widest font-['Space_Grotesk'] absolute sm:bottom-0 bottom-0 left-1/2 -translate-x-1/2">
                     Start
                   </span>
                 )}
 
                 {isCompletedDay && (
-                  <span className="sm:text-[8px] text-[5px]  text-[#ff7300] uppercase tracking-widest font-['Space_Grotesk'] absolute sm:bottom-1   left-1/2 -translate-x-1/2">
+                  <span className="sm:text-[8px] text-[5px]  text-[#00ff40] uppercase tracking-widest font-['Space_Grotesk'] absolute   left-1/2 sm:top-0 top-0 -translate-x-1/2">
                     Completed
                   </span>
                 )}
@@ -194,10 +193,10 @@ export default function GoalCalendar({
 
                 {/* Checked day — red X cross */}
                 {isChecked && (
-                  <div className="absolute sm:top-3  inset-0 flex items-center justify-center">
+                  <div className="absolute top-2.5 sm:top-1  inset-0 flex items-center justify-center">
                     <svg
-                      width="42"
-                      height="42"
+                      width="30"
+                      height="30"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="#ef4444"
@@ -212,8 +211,8 @@ export default function GoalCalendar({
 
                 {/* Target + Checked — red circle with X */}
                 {isTarget && isChecked && (
-                  <div className="absolute  sm:top-3  inset-0 flex items-center justify-center">
-                    <div className="sm:w-12 sm:h-12  w-9 h-9 rounded-full border-2 border-red-500 flex items-center justify-center shadow-[0_0_12px_rgba(239,68,68,0.4)]">
+                  <div className="absolute  sm:top-1 top-2.5 inset-0 flex items-center justify-center">
+                    <div className="sm:w-10 sm:h-10  w-9 h-9 rounded-full border-2 border-red-500 flex items-center justify-center shadow-[0_0_12px_rgba(239,68,68,0.4)]">
                       <svg
                         className="h-3 w-3 sm:h-4 sm:w-4"
                         viewBox="0 0 24 24"

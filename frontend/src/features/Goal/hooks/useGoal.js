@@ -97,6 +97,10 @@ const useGoal = () => {
       setError(null);
       const response = await getGoalByIdAPI(goalId);
       setSingleGoal(response.data);
+      setGoalStatus(response.data?.status);
+setCompletedDate(response.data?.completedAt 
+  ? new Date(response.data.completedAt).toISOString().split("T")[0] 
+  : null);
       return response;
     } catch (error) {
       setError(
