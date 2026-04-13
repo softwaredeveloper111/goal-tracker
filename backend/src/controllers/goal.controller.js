@@ -97,3 +97,26 @@ export const updateGoalController = asyncHandler(async(req,res)=>{
   sendSuccess(res,200,"goal update successfully",goal)
 
 })
+
+
+
+
+
+
+export const markAsCompletedController = asyncHandler(async(req,res)=>{
+  const userId = req.user.id;
+  const goalId = req.params.id;
+
+  const goal = await goalModel.findOne({ userId, _id: goalId });
+  if (!goal) throw new AppError('Goal not found', 404);
+
+  if (goal.status === "Completed") throw new AppError('Goal already completed', 400);
+   
+  goal.status = "Completed";
+ goal.completedAt = new Date();
+await goal.save({ validateBeforeSave: false });
+
+
+  sendSuccess(res,200,"goal marked as completed successfully",goal)
+
+})

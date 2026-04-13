@@ -1,8 +1,28 @@
 import {Link} from "react-router-dom";
-
+import { useState,useEffect, useRef } from "react";
 
 
 export default function Navbar() {
+
+  
+    const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+ 
+
+
+   useEffect(() => {
+    function handleOutsideClick(e) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setShowDropdown(false);
+      }
+    }
+
+
+     document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, []);
+
+
   return (
     <header className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-[#0e0e0e]/70 backdrop-blur-xl border-b border-[#1a1a1a] font-['Space_Grotesk']">
 
@@ -13,30 +33,47 @@ export default function Navbar() {
 
 
 
-      {/* Right Actions */}
-      <div className="flex items-center gap-3">
-        {/* Notification */}
-        <button className="p-2 text-[#555] hover:text-[#00ff87] transition-colors">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-            <path d="M13.73 21a2 2 0 01-3.46 0"/>
-          </svg>
-        </button>
-
-        {/* Settings */}
-        <button className="p-2 text-[#555] hover:text-[#00ff87] transition-colors">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <circle cx="12" cy="12" r="3"/>
-            <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
-          </svg>
-        </button>
-
-        {/* Avatar */}
-        <div className="w-8 h-8 rounded-full bg-[#1a1a1a] border border-[#2a2a2a] flex items-center justify-center text-xs text-[#00ff87] font-bold">
+     {/* Avatar with Dropdown */}
+      <div className="relative" ref={dropdownRef}>
+        <button
+          onClick={() => setShowDropdown(prev => !prev)}
+          className="w-9 h-9 rounded-full bg-[#1a1a1a] border border-[#2a2a2a] flex items-center justify-center text-sm text-[#00ff87] font-black hover:border-[#00ff87]/40 transition-all duration-200"
+        >
           A
-        </div>
+        </button>
+ 
+        {/* Dropdown */}
+        {showDropdown && (
+          <div className="absolute right-0 top-12 w-48 bg-[#111] border border-[#1a1a1a] shadow-[0_8px_30px_rgba(0,0,0,0.5)] z-50">
+ 
+            <button
+              onClick={() => setShowDropdown(false)}
+              className="w-full flex items-center gap-3 px-4 py-3 text-[#555] hover:text-white hover:bg-[#1a1a1a] transition-all duration-200 text-[11px] uppercase tracking-widest font-['Space_Grotesk']"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+              Change Avatar
+            </button>
+ 
+            <div className="h-px bg-[#1a1a1a]" />
+ 
+            <button
+              onClick={() => setShowDropdown(false)}
+              className="w-full flex items-center gap-3 px-4 py-3 text-red-500/60 hover:text-red-400 hover:bg-red-500/5 transition-all duration-200 text-[11px] uppercase tracking-widest font-['Space_Grotesk']"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+                <polyline points="16 17 21 12 16 7"/>
+                <line x1="21" y1="12" x2="9" y2="12"/>
+              </svg>
+              Logout
+            </button>
+ 
+          </div>
+        )}
       </div>
-
 
     </header>
   );

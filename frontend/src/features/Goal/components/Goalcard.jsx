@@ -2,6 +2,9 @@
 import GoalProgressBar from "./GoalProgressBar"
 import {formatDate , calcTotalDays} from "../utils/Dateutil"
 import { Link } from "react-router-dom";
+import DeleteGoalButton from "./Deletegoalbutton";
+
+
 
 // goal prop shape:
 // { id, category, target, title, description, streak, grid[] }
@@ -10,7 +13,7 @@ export default function GoalCard({ goal }) {
  const totalDays = calcTotalDays(goal.createdAt, goal.targetDate);
 
   return (
-    <Link to={`/goals/${goal._id}`} className="block group relative bg-[#1a1a1a] p-8 transition-all duration-300 hover:bg-[#1f1f1f] cursor-pointer">
+    <Link to={`/goals/${goal._id}`} className=" block group relative bg-[#1a1a1a] p-8 transition-all duration-300 hover:bg-[#1f1f1f] cursor-pointer">
 
       {/* Left accent bar — animates on hover */}
       <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-[#00ff87] scale-y-0 group-hover:scale-y-100 transition-transform origin-top duration-300" />
@@ -47,7 +50,16 @@ export default function GoalCard({ goal }) {
             </span>
           </div>
         </div>
+         
+
       </div>
+
+                             
+            <div className="absolute  top-1 right-1">
+  <DeleteGoalButton onConfirm={() => {}} />
+</div>
+
+
     </Link>
   );
 }

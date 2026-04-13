@@ -121,7 +121,7 @@ export default function GoalCalendar({ targetDate, checkins = [], createdAt , on
                 {/* mark start day */}
                
                 {isStartDay && (
-  <span className="text-[8px] text-[#ffe600] uppercase tracking-widest font-['Space_Grotesk'] absolute top-1 left-1/2 -translate-x-1/2">
+  <span className="text-[8px] text-[#ffe600] uppercase tracking-widest font-['Space_Grotesk'] absolute bottom-1 left-1/2 -translate-x-1/2">
     Start
   </span>
 )}

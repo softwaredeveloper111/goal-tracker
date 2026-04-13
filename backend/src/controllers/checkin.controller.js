@@ -15,7 +15,11 @@ export const toggleCheckinController = asyncHandler(async (req, res) => {
   const userId = req.user.id;
   const { goalId, date} = req.body;
 
-  const goal = await goalModel.findById(goalId);
+  const goal = await goalModel.findOne({userId, _id:goalId});
+ 
+  if (!goal) throw new AppError('Goal not found', 404);
+  if (goal.status === "Completed") throw new AppError('Goal is locked — already completed', 400);
+
   const goalCreatedDate = new Date(goal.createdAt).toISOString().split("T")[0];
 
   if(date < goalCreatedDate){

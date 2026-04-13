@@ -50,17 +50,24 @@ const goalSchema = new mongoose.Schema({
 
 /** validation middleware that date cannot be in the past  */
 goalSchema.pre("save", function(){
+
   const goal = this;
+ 
+   if (!goal.isNew) return ;
+
 
    const date = new Date(goal.targetDate);
+
   if (isNaN(date.getTime())) {
-    return next(new Error("Target date is not a valid date"));
+    throw new Error("Target date is not a valid date");
   }
 
      const today = new Date().toISOString().split("T")[0];
     if(goal.targetDate < today){
       throw new Error("Target date cannot be in the past");
     }
+
+  
 })
 
 

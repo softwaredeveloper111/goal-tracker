@@ -1,5 +1,8 @@
 import { formatDate } from "../utils/Dateutil";
 import { calcDaysLeft } from "../utils/Dateutil";
+import MarkAsCompleteButton from "./MarkAsCompleteButton";
+
+
 
 
 export default function GoalDetailHeader({ goal }) {
@@ -58,6 +61,14 @@ export default function GoalDetailHeader({ goal }) {
             {formatDate(goal?.targetDate)}
           </p>
         </div>
+         
+
+<MarkAsCompleteButton
+  status={goal?.status}
+  onConfirm={""} // apni API call yahan}
+/>
+
+
       </div>
 
       {/* Divider */}

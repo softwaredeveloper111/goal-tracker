@@ -7,6 +7,7 @@ import
   getSingleGoalController,
   deleteGoalController,
   updateGoalController,
+  markAsCompletedController
 }
 from "../controllers/goal.controller.js"
 import {createGoalvalidation,goalIdValidation , updateGoalValidation} from "../validator/goal.validator.js"
@@ -15,8 +16,6 @@ import {createGoalvalidation,goalIdValidation , updateGoalValidation} from "../v
 
 
 const goalRouter = Router();
-
-
 
 
 
@@ -51,6 +50,8 @@ goalRouter.get("/", userIdentifier , GetAllGoalsController )
 
 
 
+
+
 /**
  * @route     /api/goal/id
  * @description      user can get their single goal
@@ -76,6 +77,11 @@ goalRouter.delete("/:id",  goalIdValidation , userIdentifier , deleteGoalControl
 
 
 
+
+
+
+
+
 /**
  * @route    /api/goal/id
  * @description   update a user's goal,
@@ -84,6 +90,26 @@ goalRouter.delete("/:id",  goalIdValidation , userIdentifier , deleteGoalControl
  */
 
 goalRouter.patch("/:id", goalIdValidation , updateGoalValidation  , userIdentifier ,updateGoalController )
+
+
+
+
+
+
+
+/**
+ * @route    /api/goal/:id/complete
+ * @description   mark a goal as completed
+ * @access      Protected
+ */
+
+goalRouter.patch("/:id/complete", goalIdValidation , userIdentifier , markAsCompletedController)
+
+
+
+
+
+
 
 
 
