@@ -7,7 +7,7 @@ import useGoal from "../hooks/useGoal";
 import Fullpageloader from "../../shared/Fullpageloader";
 import { useEffect } from "react";
 import {toast} from "react-toastify";
-
+import GoalDetailSkeleton from "../../shared/Goaldetailskeleton"
 
 
 
@@ -33,6 +33,12 @@ useEffect(() => {
 
   fetchData();
 }, []);
+
+
+
+if(isSingleGoalLoading){
+  return <GoalDetailSkeleton/>
+}
 
 
 
