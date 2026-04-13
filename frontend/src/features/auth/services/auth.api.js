@@ -58,3 +58,24 @@ export const logoutAPI = async () => {
     throw error;
   }
 };
+
+
+
+
+
+export const updateProfileAvatarAPI = async(formData)=>{
+  try {
+     
+    const response = await axios.patch("/api/auth/profile" , formData , {
+    headers: {
+      "Content-Type": "multipart/form-data"
+    }})
+    
+    console.log('profile updated successfull' , response.data);
+    return response.data
+
+  } catch (error) {
+    console.error("failed to update user profile",error);
+    throw error
+  }
+}

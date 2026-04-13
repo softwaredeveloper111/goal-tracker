@@ -109,9 +109,7 @@ async  function SubmitEventHandler(data){
             <label className="block text-[10px] tracking-[0.2em] text-[#00ff87]/70 uppercase font-['Space_Grotesk']">
               Access Key
             </label>
-            <button className="text-[10px] text-[#00ff87]/40 hover:text-[#00ff87] tracking-widest uppercase transition-colors font-['Space_Grotesk']">
-              Recover Key
-            </button>
+         
           </div>
           <div className="relative">
             <input

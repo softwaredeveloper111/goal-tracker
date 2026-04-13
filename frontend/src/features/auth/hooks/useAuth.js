@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import {AuthContextProvider} from "../auth.context.jsx"
-import {registerAPI,loginAPI,getMeAPI,logoutAPI} from "../services/auth.api.js"
+import {registerAPI,loginAPI,getMeAPI,logoutAPI , updateProfileAvatarAPI} from "../services/auth.api.js"
 
 
 
@@ -59,7 +59,7 @@ const {loading,setLoading, user, setUser, error, setError, isAuthChecked, setIsA
     const response = await getMeAPI();
     setUser(response.data);
     setIsAuthChecked(true);
-    return response.data
+    return response
   } catch (error) {
     setError(error.response?.data?.message || "Failed to retrieve user data");
     return error.response.data
@@ -78,7 +78,7 @@ const {loading,setLoading, user, setUser, error, setError, isAuthChecked, setIsA
     setError(null);
     const response = await logoutAPI();
     setUser(null);
-    return response.data
+    return response
   } catch (error) {
     setError(error.response?.data?.message || "Logout failed");
     return error.response.data
@@ -90,7 +90,25 @@ const {loading,setLoading, user, setUser, error, setError, isAuthChecked, setIsA
 
 
 
-  return {HandlerRegisterAPI, HandlerLoginAPI, HandlerGetMeAPI , HandlerLogoutAPI , loading,user,error , isAuthChecked }
+  const HandlerUpdateProfileAvatarAPI  = async(avatar)=>{
+     try {
+       setLoading(true);
+       setError(null);
+       const response = await updateProfileAvatarAPI(avatar);
+       setUser(response.data);
+       return response
+     } catch (error) {
+      setError(error.response?.data?.message || "profile updated failed")
+      return error.response.data
+     }
+     finally{
+       setLoading(false)
+     }
+  }
+
+
+
+  return {HandlerRegisterAPI, HandlerLoginAPI, HandlerGetMeAPI , HandlerLogoutAPI , HandlerUpdateProfileAvatarAPI ,  loading,user,error , isAuthChecked }
 }
 
 export default useAuth
