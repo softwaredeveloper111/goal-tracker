@@ -8,6 +8,11 @@ import Fullpageloader from "../../shared/Fullpageloader"
 import  useAuth  from "../../auth/hooks/useAuth";
 import CreateGoalModal  from "../components/CreateGoalModal";
 import { Link } from "react-router-dom";
+import GoalCardSkeleton from "../../shared/Goalcardskeleton";
+
+
+
+
 
 
 
@@ -25,9 +30,6 @@ export default function DashboardPage() {
  
   
 
-  if(loading) {
-    return (<Fullpageloader/>)
-  }
 
 
 
@@ -58,10 +60,13 @@ export default function DashboardPage() {
 
         {/* Goal Cards */}
         <div className="space-y-6">
-          {goals.map((goal) => (
-            <GoalCard key={goal._id} goal={goal} />
-          ))}
+          {loading
+  ? Array.from({ length: 3 }).map((_, i) => <GoalCardSkeleton key={i} />)
+  : goals.map(goal => <GoalCard key={goal._id} goal={goal} />)
+}
+
         </div>
+        
       </main>
 
       <FAB onClick={openModalHandler}/>
