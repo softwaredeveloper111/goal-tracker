@@ -6,7 +6,7 @@ import sendSuccess from "../utils/response.js"
 import generateToken from "../utils/generateToken.js"
 import redis from "../config/redis.js"
 import uploadToImageKit from "../services/imageKit.service.js";
-
+import getCookieOptions from "../utils/cookieOptions.js"
 
 
 
@@ -34,11 +34,12 @@ export const registerUserController = asyncHandler(async (req, res) => {
 
   const token = generateToken(createdUser)
 
-  res.cookie("JWT_TOKEN",token)
+  res.cookie("JWT_TOKEN",token , getCookieOptions())
 
   sendSuccess(res,201,"user registered successfullly", createdUser)
 
 })
+
 
 
 
@@ -66,7 +67,7 @@ export const  loginUserController = asyncHandler(async(req,res)=>{
 
   const token = generateToken(isUserRegistered)
   
-   res.cookie("JWT_TOKEN",token);
+   res.cookie("JWT_TOKEN",token , getCookieOptions());
 
    sendSuccess(res,200,"user loggedin successfully", isUserRegistered)
 
