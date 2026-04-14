@@ -29,6 +29,11 @@ export const createGoalController = asyncHandler(async(req,res)=>{
 
 
 
+
+
+
+
+
 export const GetAllGoalsController = asyncHandler(async(req,res)=>{
   const userId = req.user.id
   const getGoals = await goalModel.find({userId});
@@ -40,6 +45,10 @@ export const GetAllGoalsController = asyncHandler(async(req,res)=>{
 );           
   sendSuccess(res,200,"All goals fetch successfully",goalsWithCheckedDays)
 })
+
+
+
+
 
 
 
@@ -70,6 +79,10 @@ export const getSingleGoalController = asyncHandler(async(req,res)=>{
 
 
 
+
+
+
+
 export const deleteGoalController = asyncHandler(async(req,res)=>{
   const userId = req.user.id;
   const goalId = req.params.id;
@@ -85,10 +98,21 @@ export const deleteGoalController = asyncHandler(async(req,res)=>{
 
 
 
+
+
+
+
+
 export const updateGoalController = asyncHandler(async(req,res)=>{
   const userId = req.user.id;
   const goalId = req.params.id;
   // const {title,description,targetDate} = req.body;
+  const isAlreadyCompleted = await goalModel.findById(goalId);
+
+  if(isAlreadyCompleted.status==="Completed"){
+    throw new AppError("Completed goal can not be updated")
+  };
+
   const goal = await goalModel.findOneAndUpdate({userId,_id:goalId}, req.body,{returnDocument:"after"})
   if(!goal){
     throw new AppError('goal not found', 401);
@@ -97,6 +121,10 @@ export const updateGoalController = asyncHandler(async(req,res)=>{
   sendSuccess(res,200,"goal update successfully",goal)
 
 })
+
+
+
+
 
 
 
@@ -127,4 +155,3 @@ await goal.save({ validateBeforeSave: false });
 
 
 
-;

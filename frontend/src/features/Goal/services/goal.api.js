@@ -118,3 +118,22 @@ export const markAsCompleteAPI = async(goalId)=>{
         throw error
     }
 }
+
+
+
+
+
+
+
+
+export const updateGoalAPI = async(goalId,goalData)=>{
+    try {
+
+        const response = await axios.patch(`/api/goal/${goalId}` , goalData);
+        console.log("goal updated successfully",response.data);
+        return response.data
+    } catch (error) {
+        console.log("facing error to update the goal", error);
+        throw error
+    }
+}

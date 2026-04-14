@@ -86,8 +86,7 @@ export const updateGoalValidation = [
 
  body("targetDate")
   .trim()
-  .notEmpty()
-  .withMessage("Target date is required")
+   .optional()
   .matches(/^\d{4}-\d{2}-\d{2}$/)
   .withMessage("Target date must be in YYYY-MM-DD format")
   .custom((value) => {

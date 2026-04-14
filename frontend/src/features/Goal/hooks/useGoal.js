@@ -6,11 +6,20 @@ import {
   toggleCheckinAPI,
   deleteGoalAPI,
   markAsCompleteAPI,
+  updateGoalAPI,
 } from "../services/goal.api.js";
 import { useContext } from "react";
 import { goalContextProvider } from "../goal.context.jsx";
 
+
+
+
+
+
+
 const useGoal = () => {
+
+
   const {
     goals,
     setGoals,
@@ -232,6 +241,28 @@ setCompletedDate(response.data?.completedAt
 
 
 
+  const HandlerUpdateGoalAPI = async (goalId,goalData)=>{
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await updateGoalAPI(goalId,goalData);
+      setGoals(prev=>prev.map(goal=>goal._id===goalId?response.data:goal));
+      setSingleGoal(response.data);
+      return response
+
+    } catch (error) {
+       setError(
+        error.response?.data?.message ||
+          "An error occurred while update a goal.",
+      );
+      return error.response.data;
+    }
+    finally{
+      setLoading(false)
+    }
+  }
+
+
 
 
   return {
@@ -250,7 +281,8 @@ setCompletedDate(response.data?.completedAt
     HandleDeleteGoalAPI,
     HandleMarkAsCompleteAPI,
     goalStatus,
-    completedDate
+    completedDate,
+    HandlerUpdateGoalAPI,
   };
 };
 
