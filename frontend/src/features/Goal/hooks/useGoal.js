@@ -132,7 +132,7 @@ setCompletedDate(response.data?.completedAt
 
   const HandleToggleCheckinAPI = async (checkinData) => {
     try {
-      setLoading(true);
+
       setError(null);
       const response = await toggleCheckinAPI(checkinData);
       return response;
@@ -142,9 +142,8 @@ setCompletedDate(response.data?.completedAt
           "An error occurred while toggling the check-in.",
       );
       return error.response.data;
-    } finally {
-      setLoading(false);
     }
+    
   };
 
 
