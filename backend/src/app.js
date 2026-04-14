@@ -20,7 +20,7 @@ const app = express();
 
 /** application Middleware */
 app.use(cors({
-  origin:config.FRONTEND_URL,
+  origin:config.FRONTEND_URL || "http://localhost:5173",
   credentials:true
 }))
 app.use(cookieParser());
