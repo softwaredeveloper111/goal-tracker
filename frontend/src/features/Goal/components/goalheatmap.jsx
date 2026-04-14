@@ -1,7 +1,7 @@
 // checkins = ["2026-04-11", "2026-04-13", ...]
 // Shows all days from createdAt to targetDate as small squares
 export default function GoalHeatmap({ createdAt, targetDate, checkins = [] }) {
-  const checkinSet = new Set(checkins);
+const checkinSet = new Set(checkins.map(item => item.date));
 
   // Build array of all days from createdAt to targetDate
   const start = new Date(createdAt);
@@ -33,21 +33,10 @@ export default function GoalHeatmap({ createdAt, targetDate, checkins = [] }) {
               Your Progress
             </h2>
             <p className="text-[11px] text-[#444] font-['Space_Grotesk'] uppercase tracking-widest">
-              {checkins.length} / {days.length} days checked in
+              {checkinSet.size} / {days.length} days checked in
             </p>
           </div>
 
-          {/* Legend */}
-          <div className="flex items-center gap-3">
-            <span className="text-[10px] text-[#444] uppercase tracking-widest font-['Space_Grotesk']">Less</span>
-            <div className="flex gap-1">
-              <div className="w-3 h-3 bg-[#1a1a1a]" />
-              <div className="w-3 h-3 bg-[#00ff87]/20" />
-              <div className="w-3 h-3 bg-[#00ff87]/60" />
-              <div className="w-3 h-3 bg-[#00ff87]" />
-            </div>
-            <span className="text-[10px] text-[#444] uppercase tracking-widest font-['Space_Grotesk']">More</span>
-          </div>
         </div>
 
         {/* Grid — square cells, wrap naturally */}
@@ -61,7 +50,7 @@ export default function GoalHeatmap({ createdAt, targetDate, checkins = [] }) {
               <div
                 key={dayKey}
                 title={dayKey}
-                className={`w-4 h-4 transition-all duration-200 ${
+                className={`w-4 h-4 rounded-sm transition-all duration-200 ${
                   isTarget
                     ? "ring-1 ring-red-500"
                     : ""
