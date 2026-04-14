@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import config from "../config/config.js"
-import AppError from "../utils/appError.js";
+import AppError from "../utils/AppError.js";
 import redis from "../config/redis.js"
 
 

@@ -1,6 +1,6 @@
 
 import checkinModel from "../models/checkin.model.js";
-import AppError from "../utils/appError.js";
+import AppError from "../utils/AppError.js";
 import asyncHandler from "../middlewares/asyncHandler.js";
 import config from "../config/config.js"
 import sendSuccess from "../utils/response.js"
